@@ -6,269 +6,333 @@
   <title>縦のつながり｜KickOffer 保護者コミュニティ</title>
   <style>
     :root {
-      --green: #1e8449;
-      --green-light: #27ae60;
-      --green-pale: #eafaf1;
-      --purple: #6c3483;
-      --purple-pale: #f5eef8;
-      --gray: #f4f6f8;
-      --text: #1a1a1a;
-      --text-sub: #666;
-      --radius: 16px;
-      --shadow: 0 4px 20px rgba(0,0,0,0.10);
-      --shadow-green: 0 8px 24px rgba(30,132,73,0.30);
+      --green:       #1a7a3e;
+      --green-mid:   #22964c;
+      --green-light: #e8f5ee;
+      --purple:      #5b3a8a;
+      --purple-light:#f0eaf8;
+      --text:        #111;
+      --text-sub:    #6b7280;
+      --border:      #e5e7eb;
+      --bg:          #f7f8fa;
+      --white:       #ffffff;
+      --radius-lg:   18px;
+      --radius-md:   12px;
+      --shadow-sm:   0 1px 4px rgba(0,0,0,.08);
+      --shadow-md:   0 4px 18px rgba(0,0,0,.10);
+      --shadow-green:0 6px 20px rgba(26,122,62,.25);
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
 
     body {
-      font-family: 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', 'Noto Sans JP', 'Meiryo', sans-serif;
-      background: #f0f4f2;
+      font-family: 'Hiragino Kaku Gothic ProN','Hiragino Sans','Noto Sans JP',Meiryo,sans-serif;
+      background: var(--bg);
       color: var(--text);
       min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
     }
 
     /* ─── HERO ─── */
     .hero {
-      background: linear-gradient(160deg, #145a32 0%, #1e8449 55%, #27ae60 100%);
-      padding: 40px 20px 52px;
+      background: linear-gradient(150deg, #0f4d26 0%, #1a7a3e 50%, #22964c 100%);
+      padding: 44px 20px 48px;
       text-align: center;
       position: relative;
       overflow: hidden;
     }
-    .hero::before {
-      content: "⚽";
-      font-size: 180px;
+    .hero::after {
+      content: '';
       position: absolute;
-      top: -40px; right: -30px;
-      opacity: 0.07;
-      line-height: 1;
+      inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
       pointer-events: none;
     }
-    .hero-logo {
+    .hero-inner { position: relative; z-index: 1; }
+    .hero-badge {
       display: inline-block;
-      background: rgba(255,255,255,0.15);
-      color: rgba(255,255,255,0.9);
-      font-size: 11px;
+      background: rgba(255,255,255,.14);
+      color: rgba(255,255,255,.9);
+      font-size: 10px;
       font-weight: 700;
-      letter-spacing: 2px;
-      padding: 4px 12px;
+      letter-spacing: 2.5px;
+      padding: 4px 14px;
       border-radius: 20px;
-      margin-bottom: 16px;
+      border: 1px solid rgba(255,255,255,.22);
+      margin-bottom: 18px;
       text-transform: uppercase;
     }
     .hero h1 {
       color: #fff;
-      font-size: 26px;
+      font-size: 24px;
       font-weight: 900;
-      line-height: 1.35;
+      line-height: 1.4;
       margin-bottom: 12px;
-      text-shadow: 0 2px 8px rgba(0,0,0,0.2);
+      letter-spacing: -.3px;
     }
-    .hero h1 span { color: #a9dfbf; }
+    .hero h1 em { color: #a8dbb8; font-style: normal; }
     .hero-sub {
-      color: rgba(255,255,255,0.82);
+      color: rgba(255,255,255,.78);
       font-size: 13px;
-      line-height: 1.7;
+      line-height: 1.75;
       margin-bottom: 24px;
     }
-    .trust-pills {
+    .pills {
       display: flex;
       justify-content: center;
       gap: 8px;
       flex-wrap: wrap;
     }
-    .trust-pill {
-      background: rgba(255,255,255,0.18);
+    .pill {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      background: rgba(255,255,255,.14);
+      border: 1px solid rgba(255,255,255,.22);
       color: #fff;
       font-size: 11px;
       font-weight: 600;
       padding: 5px 12px;
       border-radius: 20px;
-      border: 1px solid rgba(255,255,255,0.3);
     }
+    .pill svg { width: 12px; height: 12px; flex-shrink: 0; }
 
-    /* ─── MAIN CONTENT ─── */
+    /* ─── LAYOUT ─── */
     .content {
-      padding: 0 16px 40px;
       max-width: 480px;
       margin: 0 auto;
+      padding: 0 16px 48px;
     }
-
-    /* ─── SECTION LABEL ─── */
     .section-label {
-      text-align: center;
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 700;
-      color: var(--green);
-      letter-spacing: 1.5px;
+      letter-spacing: 1.8px;
       text-transform: uppercase;
-      margin: 28px 0 14px;
+      color: var(--green);
+      text-align: center;
+      margin: 30px 0 14px;
     }
 
     /* ─── ROLE CARDS ─── */
-    .role-cards {
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-    }
+    .role-cards { display: flex; flex-direction: column; gap: 12px; }
 
     .role-card {
-      background: #fff;
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
+      background: var(--white);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-md);
       overflow: hidden;
-      border: 2px solid transparent;
-      transition: border-color 0.2s, box-shadow 0.2s;
+      border: 1.5px solid var(--border);
+      transition: border-color .2s, box-shadow .2s;
     }
-    .role-card.active { border-color: var(--green); box-shadow: var(--shadow-green); }
+    .role-card.active {
+      border-color: var(--green);
+      box-shadow: var(--shadow-green);
+    }
 
-    .role-card-header {
+    .card-header {
       display: flex;
       align-items: center;
-      padding: 18px 18px 16px;
+      padding: 18px 16px;
       cursor: pointer;
       gap: 14px;
       user-select: none;
     }
-    .role-icon {
+    .card-icon {
       width: 48px; height: 48px;
-      border-radius: 12px;
+      border-radius: var(--radius-md);
       display: flex; align-items: center; justify-content: center;
-      font-size: 22px;
       flex-shrink: 0;
     }
-    .role-icon.senior { background: var(--purple-pale); }
-    .role-icon.junior { background: var(--green-pale); }
-    .role-card-text { flex: 1; }
-    .role-card-title {
-      font-size: 16px;
-      font-weight: 800;
-      color: var(--text);
-      margin-bottom: 3px;
-    }
-    .role-card-desc { font-size: 12px; color: var(--text-sub); line-height: 1.5; }
+    .card-icon.senior { background: var(--purple-light); }
+    .card-icon.junior { background: var(--green-light); }
+    .card-icon svg { width: 22px; height: 22px; }
 
-    .role-chevron {
+    .card-meta { flex: 1; min-width: 0; }
+    .card-title { font-size: 15px; font-weight: 800; color: var(--text); margin-bottom: 3px; }
+    .card-desc { font-size: 12px; color: var(--text-sub); line-height: 1.5; }
+
+    .card-arrow {
       width: 28px; height: 28px;
       border-radius: 50%;
-      background: var(--gray);
+      background: #f3f4f6;
       display: flex; align-items: center; justify-content: center;
-      font-size: 13px;
-      transition: transform 0.25s, background 0.2s;
       flex-shrink: 0;
+      transition: transform .25s, background .2s;
     }
-    .role-card.active .role-chevron {
+    .card-arrow svg { width: 14px; height: 14px; color: #9ca3af; }
+    .role-card.active .card-arrow {
       transform: rotate(90deg);
-      background: var(--green-pale);
+      background: var(--green-light);
     }
+    .role-card.active .card-arrow svg { color: var(--green); }
 
-    .role-card-body {
+    .card-body {
       max-height: 0;
       overflow: hidden;
-      transition: max-height 0.35s ease;
-      padding: 0 18px;
+      transition: max-height .35s ease;
+      padding: 0 16px;
     }
-    .role-card.active .role-card-body { max-height: 700px; }
-    .role-card-body-inner { padding: 0 0 20px; }
+    .role-card.active .card-body { max-height: 800px; }
+    .card-body-inner { padding-bottom: 20px; }
 
-    /* ─── GRADE SELECTOR ─── */
+    /* ─── STEPS (inside card) ─── */
+    .steps {
+      background: #f9fafb;
+      border-radius: var(--radius-md);
+      padding: 14px 16px;
+      margin-bottom: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .step { display: flex; align-items: flex-start; gap: 11px; }
+    .step-num {
+      width: 22px; height: 22px;
+      border-radius: 50%;
+      background: var(--green);
+      color: #fff;
+      font-size: 11px;
+      font-weight: 800;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .step-text { font-size: 12.5px; line-height: 1.6; color: #374151; }
+    .step-text strong { color: var(--green); font-weight: 700; }
+
+    /* ─── GRADE PICKER ─── */
     .grade-label {
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 700;
       color: var(--text-sub);
-      margin-bottom: 10px;
+      margin-bottom: 9px;
+      letter-spacing: .3px;
     }
-    .grade-buttons {
+    .grade-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 8px;
       margin-bottom: 14px;
     }
     .grade-btn {
-      background: var(--gray);
-      border: 2px solid transparent;
-      border-radius: 10px;
+      background: #f3f4f6;
+      border: 1.5px solid transparent;
+      border-radius: var(--radius-md);
       padding: 10px 8px;
       cursor: pointer;
       text-align: center;
-      transition: all 0.18s;
       font-family: inherit;
+      transition: all .18s;
     }
-    .grade-btn:active { transform: scale(0.96); }
-    .grade-btn.selected {
-      background: var(--green-pale);
-      border-color: var(--green);
-    }
-    .grade-btn-year {
-      font-size: 13px;
-      font-weight: 800;
-      color: var(--text);
-      display: block;
-    }
-    .grade-btn.selected .grade-btn-year { color: var(--green); }
-    .grade-btn-sub {
-      font-size: 10px;
-      color: var(--text-sub);
-      margin-top: 2px;
-      display: block;
-    }
-    .grade-btn.selected .grade-btn-sub { color: var(--green); }
+    .grade-btn:active { transform: scale(.96); }
+    .grade-btn.selected { background: var(--green-light); border-color: var(--green); }
+    .grade-year { display: block; font-size: 13px; font-weight: 800; color: var(--text); }
+    .grade-btn.selected .grade-year { color: var(--green); }
+    .grade-sub { display: block; font-size: 10px; color: var(--text-sub); margin-top: 2px; }
+    .grade-btn.selected .grade-sub { color: var(--green-mid); }
 
-    /* ─── CTA BUTTONS ─── */
-    .cta-btn {
-      display: block;
+    /* ─── BUTTONS ─── */
+    .btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
       width: 100%;
-      padding: 16px;
-      border-radius: 12px;
+      padding: 15px 16px;
+      border-radius: var(--radius-md);
       text-decoration: none;
-      text-align: center;
       font-family: inherit;
-      font-size: 15px;
+      font-size: 14px;
       font-weight: 800;
       cursor: pointer;
       border: none;
-      transition: opacity 0.15s, transform 0.15s;
-      margin-top: 6px;
+      transition: opacity .15s, transform .15s;
     }
-    .cta-btn:active { transform: scale(0.97); opacity: 0.85; }
-
-    .cta-primary {
-      background: linear-gradient(135deg, var(--green-light), var(--green));
+    .btn:active { transform: scale(.97); opacity: .85; }
+    .btn-green {
+      background: linear-gradient(135deg, #22964c, #1a7a3e);
       color: #fff;
       box-shadow: var(--shadow-green);
     }
-    .cta-secondary {
-      background: linear-gradient(135deg, #8e44ad, var(--purple));
+    .btn-purple {
+      background: linear-gradient(135deg, #7b52b0, #5b3a8a);
       color: #fff;
-      box-shadow: 0 8px 24px rgba(108,52,131,0.30);
+      box-shadow: 0 6px 20px rgba(91,58,138,.28);
     }
-    .cta-btn-sub {
+    .btn-outline {
+      background: var(--white);
+      color: #374151;
+      border: 1.5px solid var(--border);
+      box-shadow: var(--shadow-sm);
+    }
+    .btn-sub {
       font-size: 11px;
       font-weight: 500;
-      opacity: 0.85;
-      margin-top: 3px;
-      display: block;
+      opacity: .82;
+      margin-top: 2px;
     }
+
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 14px 0;
+      font-size: 11px;
+      color: #d1d5db;
+    }
+    .divider::before, .divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* ─── SAMPLE VOICES ─── */
+    .voices { display: flex; flex-direction: column; gap: 10px; }
+    .voice {
+      background: var(--white);
+      border-radius: var(--radius-md);
+      padding: 14px 16px;
+      box-shadow: var(--shadow-sm);
+      border-left: 3px solid var(--green);
+    }
+    .voice.junior { border-left-color: var(--purple); }
+    .voice-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+    .voice-tag {
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 9px;
+      border-radius: 20px;
+    }
+    .voice-tag.senior-tag { background: var(--purple-light); color: var(--purple); }
+    .voice-tag.junior-tag { background: var(--green-light); color: var(--green); }
+    .voice-year { font-size: 10px; color: var(--text-sub); }
+    .voice-text { font-size: 12.5px; line-height: 1.7; color: #374151; }
 
     /* ─── HOW IT WORKS ─── */
     .how-card {
-      background: #fff;
-      border-radius: var(--radius);
+      background: var(--white);
+      border-radius: var(--radius-lg);
       padding: 20px 18px;
-      box-shadow: var(--shadow);
-      margin-top: 4px;
+      box-shadow: var(--shadow-md);
+      border: 1.5px solid var(--border);
     }
     .how-title {
-      font-size: 14px;
+      font-size: 13px;
       font-weight: 800;
-      color: var(--text);
-      margin-bottom: 16px;
+      color: var(--text-sub);
       text-align: center;
+      margin-bottom: 16px;
+      letter-spacing: .5px;
+      text-transform: uppercase;
     }
     .how-steps { display: flex; flex-direction: column; gap: 14px; }
     .how-step { display: flex; align-items: flex-start; gap: 12px; }
-    .how-step-num {
+    .how-num {
       width: 26px; height: 26px;
       border-radius: 50%;
       background: var(--green);
@@ -279,247 +343,226 @@
       flex-shrink: 0;
       margin-top: 1px;
     }
-    .how-step-text { font-size: 13px; line-height: 1.55; color: var(--text); }
-    .how-step-text strong { color: var(--green); }
-
-    /* ─── SAMPLE VOICE ─── */
-    .sample-voices { display: flex; flex-direction: column; gap: 10px; }
-    .voice-card {
-      background: #fff;
-      border-radius: 12px;
-      padding: 14px 16px;
-      box-shadow: 0 2px 12px rgba(0,0,0,0.07);
-      border-left: 4px solid var(--green);
-    }
-    .voice-card.junior-voice { border-left-color: var(--purple); }
-    .voice-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 8px;
-    }
-    .voice-role {
-      font-size: 10px;
-      font-weight: 700;
-      padding: 2px 8px;
-      border-radius: 20px;
-    }
-    .voice-role.senior-tag { background: var(--purple-pale); color: var(--purple); }
-    .voice-role.junior-tag { background: var(--green-pale); color: var(--green); }
-    .voice-year { font-size: 10px; color: var(--text-sub); }
-    .voice-text { font-size: 12px; line-height: 1.65; color: #444; }
+    .how-text { font-size: 13px; line-height: 1.65; color: var(--text); }
+    .how-text strong { color: var(--green); }
 
     /* ─── FOOTER ─── */
     .footer {
       text-align: center;
-      padding: 24px 16px;
+      padding: 28px 16px 32px;
       font-size: 11px;
-      color: #aaa;
+      color: #9ca3af;
+      line-height: 1.8;
     }
     .footer a { color: var(--green); text-decoration: none; }
-
-    /* ─── SEPARATOR ─── */
-    .sep {
-      text-align: center;
-      font-size: 11px;
-      color: #bbb;
-      margin: 18px 0;
-      position: relative;
-    }
-    .sep::before, .sep::after {
-      content: '';
-      display: inline-block;
-      width: 40px;
-      height: 1px;
-      background: #ddd;
-      vertical-align: middle;
-      margin: 0 8px;
-    }
   </style>
 </head>
 <body>
 
-<!-- ── HERO ── -->
+<!-- HERO -->
 <div class="hero">
-  <div class="hero-logo">KickOffer</div>
-  <h1>先輩・後輩保護者が<br><span>縦につながる</span>掲示板</h1>
-  <p class="hero-sub">
-    チーム選びの不安は一人で抱えなくていい。<br>
-    先輩の体験談から、あなたに合った答えを見つけよう。
-  </p>
-  <div class="trust-pills">
-    <span class="trust-pill">✅ 匿名投稿OK</span>
-    <span class="trust-pill">🔍 運営確認済み</span>
-    <span class="trust-pill">⚽ サッカー専門</span>
+  <div class="hero-inner">
+    <div class="hero-badge">KickOffer</div>
+    <h1>先輩・後輩保護者が<br><em>縦につながる</em>掲示板</h1>
+    <p class="hero-sub">
+      チーム選びの不安は一人で抱えなくていい。<br>
+      先輩の体験談から、あなたに合った答えを見つけよう。
+    </p>
+    <div class="pills">
+      <span class="pill">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+        匿名投稿OK
+      </span>
+      <span class="pill">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        運営確認済み
+      </span>
+      <span class="pill">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        サッカー専門
+      </span>
+    </div>
   </div>
 </div>
 
-<!-- ── MAIN ── -->
+<!-- MAIN -->
 <div class="content">
 
-  <p class="section-label">どちらですか？</p>
+  <p class="section-label">あなたはどちらですか？</p>
 
   <div class="role-cards">
 
-    <!-- ── 先輩保護者カード ── -->
+    <!-- 先輩保護者 -->
     <div class="role-card" id="card-senior" onclick="toggleCard('senior')">
-      <div class="role-card-header">
-        <div class="role-icon senior">🏆</div>
-        <div class="role-card-text">
-          <div class="role-card-title">先輩保護者として投稿する</div>
-          <div class="role-card-desc">ジュニアユース選びを経験済みの方<br>体験談・失敗談・アドバイスを共有</div>
+      <div class="card-header">
+        <div class="card-icon senior">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#5b3a8a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+          </svg>
         </div>
-        <div class="role-chevron">›</div>
+        <div class="card-meta">
+          <div class="card-title">先輩保護者として投稿する</div>
+          <div class="card-desc">ジュニアユース選びを経験した方<br>体験談・アドバイスを後輩へ共有</div>
+        </div>
+        <div class="card-arrow">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="9 18 15 12 9 6"/>
+          </svg>
+        </div>
       </div>
-      <div class="role-card-body">
-        <div class="role-card-body-inner">
-          <div class="how-card" style="margin-bottom:12px; padding:14px 16px;">
-            <div class="how-steps">
-              <div class="how-step">
-                <div class="how-step-num">1</div>
-                <div class="how-step-text">お子さんが<strong>どのチームを選んだか</strong>・<strong>決め手</strong>を教えてください</div>
-              </div>
-              <div class="how-step">
-                <div class="how-step-num">2</div>
-                <div class="how-step-text">当時<strong>悩んだこと</strong>や<strong>失敗談</strong>も正直に書くほど役に立ちます</div>
-              </div>
-              <div class="how-step">
-                <div class="how-step-num">3</div>
-                <div class="how-step-text">運営が確認後、<strong>匿名で掲示板に掲載</strong>されます</div>
-              </div>
+      <div class="card-body">
+        <div class="card-body-inner">
+          <div class="steps">
+            <div class="step">
+              <div class="step-num">1</div>
+              <div class="step-text">選んだチームの<strong>決め手・判断基準</strong>を教えてください</div>
+            </div>
+            <div class="step">
+              <div class="step-num">2</div>
+              <div class="step-text"><strong>悩んだこと・失敗談</strong>も正直に書くほど後輩の役に立ちます</div>
+            </div>
+            <div class="step">
+              <div class="step-num">3</div>
+              <div class="step-text">運営が確認後、<strong>匿名で掲示板に掲載</strong>します</div>
             </div>
           </div>
-          <a class="cta-btn cta-secondary" href="https://forms.gle/DDn86FGVjo96jaVk7" target="_blank">
-            🏆 体験談・アドバイスを投稿する
-            <span class="cta-btn-sub">フォームに回答（約3分）</span>
+          <a class="btn btn-purple" href="https://forms.gle/DDn86FGVjo96jaVk7" target="_blank">
+            体験談・アドバイスを投稿する
+            <span class="btn-sub">フォームに回答（約3分）</span>
           </a>
         </div>
       </div>
     </div>
 
-    <!-- ── 後輩保護者カード ── -->
+    <!-- 後輩保護者 -->
     <div class="role-card" id="card-junior" onclick="toggleCard('junior')">
-      <div class="role-card-header">
-        <div class="role-icon junior">🌱</div>
-        <div class="role-card-text">
-          <div class="role-card-title">後輩保護者として使う</div>
-          <div class="role-card-desc">今まさにチーム選びで悩んでいる方<br>先輩の声を読む・悩みを投稿する</div>
+      <div class="card-header">
+        <div class="card-icon junior">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#1a7a3e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/>
+            <line x1="12" y1="8" x2="12" y2="12"/>
+            <line x1="12" y1="16" x2="12.01" y2="16"/>
+          </svg>
         </div>
-        <div class="role-chevron">›</div>
+        <div class="card-meta">
+          <div class="card-title">後輩保護者として使う</div>
+          <div class="card-desc">今まさにチーム選びで悩んでいる方<br>先輩の声を読む・悩みを投稿する</div>
+        </div>
+        <div class="card-arrow">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="9 18 15 12 9 6"/>
+          </svg>
+        </div>
       </div>
-      <div class="role-card-body">
-        <div class="role-card-body-inner">
+      <div class="card-body">
+        <div class="card-body-inner">
 
-          <!-- 学年セレクター -->
-          <div class="grade-label">📅 お子さんの卒業予定年度を選ぶと、関係する投稿を見やすくなります</div>
-          <div class="grade-buttons">
+          <div class="grade-label">卒業予定年度を選ぶと、関連する投稿が見やすくなります</div>
+          <div class="grade-grid">
             <button class="grade-btn" onclick="selectGrade(event,'2027')">
-              <span class="grade-btn-year">2027年度卒</span>
-              <span class="grade-btn-sub">現在 小6 ⚡最優先</span>
+              <span class="grade-year">2027年度卒</span>
+              <span class="grade-sub">現在 小6・最優先</span>
             </button>
             <button class="grade-btn" onclick="selectGrade(event,'2028')">
-              <span class="grade-btn-year">2028年度卒</span>
-              <span class="grade-btn-sub">現在 小5</span>
+              <span class="grade-year">2028年度卒</span>
+              <span class="grade-sub">現在 小5</span>
             </button>
             <button class="grade-btn" onclick="selectGrade(event,'2029')">
-              <span class="grade-btn-year">2029年度卒</span>
-              <span class="grade-btn-sub">現在 小4</span>
+              <span class="grade-year">2029年度卒</span>
+              <span class="grade-sub">現在 小4</span>
             </button>
             <button class="grade-btn" onclick="selectGrade(event,'2030')">
-              <span class="grade-btn-year">2030年度卒</span>
-              <span class="grade-btn-sub">現在 小3</span>
+              <span class="grade-year">2030年度卒</span>
+              <span class="grade-sub">現在 小3</span>
             </button>
           </div>
 
-          <a class="cta-btn cta-primary" id="view-btn" href="https://www.notion.so/cfd7288492c844e0bd6477cd02f66075" target="_blank">
-            👀 先輩の体験談・掲示板を見る
-            <span class="cta-btn-sub" id="view-btn-sub">学年を選ぶとより関係する投稿が見やすくなります</span>
+          <a class="btn btn-green" id="view-btn" href="https://troubled-delphinium-814.notion.site/cfd7288492c844e0bd6477cd02f66075?v=0e03f1e322f24598807fef772affe65c" target="_blank">
+            先輩の体験談・掲示板を見る
+            <span class="btn-sub" id="view-btn-sub">年度を選ぶと関連投稿が見やすくなります</span>
           </a>
 
-          <div class="sep">または</div>
+          <div class="divider">または</div>
 
-          <a class="cta-btn" style="background:#f4f6f8; color:#444; border:2px solid #ddd; box-shadow:none;" href="https://forms.gle/DDn86FGVjo96jaVk7" target="_blank">
-            💬 悩みを投稿して先輩に相談する
-            <span class="cta-btn-sub" style="color:#999;">フォームに回答（約2分）</span>
+          <a class="btn btn-outline" href="https://forms.gle/DDn86FGVjo96jaVk7" target="_blank">
+            悩みを投稿して先輩に相談する
+            <span class="btn-sub" style="color:#9ca3af;">フォームに回答（約2分）</span>
           </a>
         </div>
       </div>
     </div>
 
-  </div><!-- /role-cards -->
+  </div>
 
-  <!-- ── SAMPLE VOICES ── -->
-  <p class="section-label" style="margin-top:32px;">💬 掲示板のサンプル</p>
-  <div class="sample-voices">
-    <div class="voice-card">
-      <div class="voice-header">
-        <span class="voice-role senior-tag">🏆 先輩保護者</span>
+  <!-- SAMPLE VOICES -->
+  <p class="section-label" style="margin-top:34px;">掲示板の投稿サンプル</p>
+  <div class="voices">
+    <div class="voice">
+      <div class="voice-top">
+        <span class="voice-tag senior-tag">先輩保護者</span>
         <span class="voice-year">2027年度卒</span>
       </div>
       <div class="voice-text">「体験会に6チーム参加しましたが、コーチの言葉遣いと練習中の選手の表情で最終的に決めました。費用よりも雰囲気が大事でした。」</div>
     </div>
-    <div class="voice-card junior-voice">
-      <div class="voice-header">
-        <span class="voice-role junior-tag">🌱 後輩保護者</span>
+    <div class="voice junior">
+      <div class="voice-top">
+        <span class="voice-tag junior-tag">後輩保護者</span>
         <span class="voice-year">2028年度卒</span>
       </div>
       <div class="voice-text">「自宅からの距離と費用のバランスで悩んでいます。強いチームに入れたいけど遠征が多いと聞いて不安で…先輩保護者に聞いてみたいです。」</div>
     </div>
-    <div class="voice-card">
-      <div class="voice-header">
-        <span class="voice-role senior-tag">🏆 先輩保護者</span>
+    <div class="voice">
+      <div class="voice-top">
+        <span class="voice-tag senior-tag">先輩保護者</span>
         <span class="voice-year">2026年度卒</span>
       </div>
       <div class="voice-text">「セレクションに落ちても落ち込まないで。息子は3回落ちて4回目に合格。その間に練習量が増えて、結果的に成長できました。諦めないことが大事！」</div>
     </div>
   </div>
 
-  <!-- ── HOW IT WORKS ── -->
-  <p class="section-label" style="margin-top:32px;">📖 使い方</p>
+  <!-- HOW IT WORKS -->
+  <p class="section-label" style="margin-top:34px;">使い方</p>
   <div class="how-card">
     <div class="how-steps">
       <div class="how-step">
-        <div class="how-step-num">1</div>
-        <div class="how-step-text">先輩保護者が<strong>フォームから体験談・アドバイス</strong>を投稿します</div>
+        <div class="how-num">1</div>
+        <div class="how-text">先輩保護者が<strong>フォームから体験談・アドバイス</strong>を投稿</div>
       </div>
       <div class="how-step">
-        <div class="how-step-num">2</div>
-        <div class="how-step-text">KickOffer運営が<strong>内容を確認</strong>し、匿名で掲示板に公開します</div>
+        <div class="how-num">2</div>
+        <div class="how-text">KickOffer運営が<strong>内容を確認</strong>し、匿名で掲示板に公開</div>
       </div>
       <div class="how-step">
-        <div class="how-step-num">3</div>
-        <div class="how-step-text">後輩保護者が<strong>学年・テーマで絞り込んで</strong>必要な情報を探せます</div>
+        <div class="how-num">3</div>
+        <div class="how-text">後輩保護者が<strong>年度・テーマで絞り込んで</strong>必要な情報を検索</div>
       </div>
       <div class="how-step">
-        <div class="how-step-num">4</div>
-        <div class="how-step-text">後輩からも悩みを投稿 → 先輩が答える<strong>循環コミュニティ</strong>が育ちます</div>
+        <div class="how-num">4</div>
+        <div class="how-text">後輩からも悩みを投稿 → 先輩が答える<strong>循環コミュニティ</strong>へ</div>
       </div>
     </div>
   </div>
 
-</div><!-- /content -->
+</div>
 
+<!-- FOOTER -->
 <div class="footer">
   運営: <a href="https://lin.ee/kickoffer" target="_blank">KickOffer 公式LINE</a> ｜
   <a href="https://forms.gle/DDn86FGVjo96jaVk7" target="_blank">投稿フォーム</a><br>
-  <span style="margin-top:6px;display:block;">© 2026 KickOffer. 投稿内容は運営確認後に掲載されます。</span>
+  © 2026 KickOffer. 投稿内容は運営確認後に掲載されます。
 </div>
 
 <script>
-  // ── カード開閉 ──
   function toggleCard(role) {
     const card = document.getElementById('card-' + role);
     const isActive = card.classList.contains('active');
-    // 全カードを閉じる
     document.querySelectorAll('.role-card').forEach(c => c.classList.remove('active'));
-    // クリックしたカードをトグル
     if (!isActive) card.classList.add('active');
   }
 
-  // ── 学年選択 ──
-  const notionBase = 'https://www.notion.so/cfd7288492c844e0bd6477cd02f66075';
+  const notionBase = 'https://troubled-delphinium-814.notion.site/cfd7288492c844e0bd6477cd02f66075?v=0e03f1e322f24598807fef772affe65c';
   const gradeLabels = {
-    '2027': '小6（今すぐ情報収集！）',
+    '2027': '小6（今すぐ情報収集を）',
     '2028': '小5の保護者向け',
     '2029': '小4の保護者向け',
     '2030': '小3の保護者向け'
@@ -527,16 +570,12 @@
 
   function selectGrade(e, year) {
     e.stopPropagation();
-    // ボタンのハイライト
     document.querySelectorAll('.grade-btn').forEach(b => b.classList.remove('selected'));
     e.currentTarget.classList.add('selected');
-    // ビューボタンのテキスト更新
     const label = gradeLabels[year] || '';
-    document.getElementById('view-btn').innerHTML =
-      '👀 先輩の体験談を見る（' + year + '年度）' +
-      '<span class="cta-btn-sub" id="view-btn-sub">' + label + 'の投稿を優先して表示します</span>';
-    // リンク先はNotionのメインDB（ビューは手動で切り替え）
-    document.getElementById('view-btn').href = notionBase;
+    const btn = document.getElementById('view-btn');
+    btn.querySelector('.btn-sub').textContent = label + 'の投稿を優先して表示します';
+    btn.href = notionBase;
   }
 </script>
 </body>
