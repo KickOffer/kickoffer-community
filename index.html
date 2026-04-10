@@ -4,412 +4,644 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>縦のつながり｜KickOffer 保護者コミュニティ</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
   <style>
     :root {
-      --green:       #1a7a3e;
-      --green-mid:   #22964c;
-      --green-light: #e8f5ee;
-      --purple:      #5b3a8a;
-      --purple-light:#f0eaf8;
-      --text:        #111;
-      --text-sub:    #6b7280;
-      --border:      #e5e7eb;
-      --bg:          #f7f8fa;
-      --white:       #ffffff;
-      --radius-lg:   18px;
-      --radius-md:   12px;
-      --shadow-sm:   0 1px 4px rgba(0,0,0,.08);
-      --shadow-md:   0 4px 18px rgba(0,0,0,.10);
-      --shadow-green:0 6px 20px rgba(26,122,62,.25);
+      --c-bg:        #0a0f0d;
+      --c-surface:   #111814;
+      --c-card:      #161d19;
+      --c-card2:     #1a2320;
+      --c-border:    rgba(255,255,255,.07);
+      --c-border2:   rgba(255,255,255,.12);
+      --c-green:     #22c55e;
+      --c-green-dim: #16a34a;
+      --c-green-glow:rgba(34,197,94,.18);
+      --c-purple:    #a78bfa;
+      --c-purple-dim:#7c3aed;
+      --c-purple-glow:rgba(167,139,250,.18);
+      --c-text:      #f1f5f2;
+      --c-text-sub:  #8a9e90;
+      --c-text-mute: #4a5e50;
+      --r-lg: 20px;
+      --r-md: 14px;
+      --r-sm: 10px;
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
 
+    html { scroll-behavior: smooth; }
+
     body {
-      font-family: 'Hiragino Kaku Gothic ProN','Hiragino Sans','Noto Sans JP',Meiryo,sans-serif;
-      background: var(--bg);
-      color: var(--text);
+      font-family: 'Noto Sans JP', 'Hiragino Kaku Gothic ProN', sans-serif;
+      background: var(--c-bg);
+      color: var(--c-text);
       min-height: 100vh;
       -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
     }
 
-    /* ─── HERO ─── */
+    /* ══════════════════════════
+       HERO
+    ══════════════════════════ */
     .hero {
-      background: linear-gradient(150deg, #0f4d26 0%, #1a7a3e 50%, #22964c 100%);
-      padding: 44px 20px 48px;
-      text-align: center;
       position: relative;
+      padding: 56px 20px 52px;
+      text-align: center;
       overflow: hidden;
     }
+
+    /* ambient glow */
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -80px; left: 50%;
+      transform: translateX(-50%);
+      width: 480px; height: 480px;
+      background: radial-gradient(ellipse, rgba(34,197,94,.14) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    /* grid lines */
     .hero::after {
       content: '';
       position: absolute;
       inset: 0;
-      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      background-image:
+        linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px);
+      background-size: 40px 40px;
       pointer-events: none;
+      mask-image: linear-gradient(to bottom, transparent, rgba(0,0,0,.6) 20%, rgba(0,0,0,.6) 80%, transparent);
     }
-    .hero-inner { position: relative; z-index: 1; }
-    .hero-badge {
-      display: inline-block;
-      background: rgba(255,255,255,.14);
-      color: rgba(255,255,255,.9);
+
+    .hero-inner { position: relative; z-index: 1; max-width: 480px; margin: 0 auto; }
+
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(34,197,94,.1);
+      border: 1px solid rgba(34,197,94,.25);
+      color: var(--c-green);
       font-size: 10px;
       font-weight: 700;
-      letter-spacing: 2.5px;
-      padding: 4px 14px;
+      letter-spacing: 2px;
+      padding: 5px 14px;
       border-radius: 20px;
-      border: 1px solid rgba(255,255,255,.22);
-      margin-bottom: 18px;
+      margin-bottom: 22px;
       text-transform: uppercase;
     }
-    .hero h1 {
-      color: #fff;
-      font-size: 24px;
+    .hero-eyebrow-dot {
+      width: 5px; height: 5px;
+      background: var(--c-green);
+      border-radius: 50%;
+      animation: pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50%       { opacity: .5; transform: scale(1.4); }
+    }
+
+    .hero-title {
+      font-size: clamp(26px, 7vw, 32px);
       font-weight: 900;
-      line-height: 1.4;
-      margin-bottom: 12px;
-      letter-spacing: -.3px;
+      line-height: 1.3;
+      letter-spacing: -.5px;
+      margin-bottom: 14px;
+      color: var(--c-text);
     }
-    .hero h1 em { color: #a8dbb8; font-style: normal; }
-    .hero-sub {
-      color: rgba(255,255,255,.78);
-      font-size: 13px;
-      line-height: 1.75;
-      margin-bottom: 24px;
+    .hero-title .accent {
+      background: linear-gradient(90deg, #22c55e, #4ade80);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
-    .pills {
+
+    .hero-desc {
+      font-size: 13.5px;
+      line-height: 1.85;
+      color: var(--c-text-sub);
+      margin-bottom: 28px;
+    }
+
+    .hero-stats {
       display: flex;
       justify-content: center;
-      gap: 8px;
+      gap: 6px;
       flex-wrap: wrap;
     }
-    .pill {
+    .stat-chip {
       display: flex;
       align-items: center;
       gap: 5px;
-      background: rgba(255,255,255,.14);
-      border: 1px solid rgba(255,255,255,.22);
-      color: #fff;
+      background: rgba(255,255,255,.05);
+      border: 1px solid var(--c-border2);
+      color: var(--c-text-sub);
       font-size: 11px;
-      font-weight: 600;
+      font-weight: 500;
       padding: 5px 12px;
       border-radius: 20px;
+      backdrop-filter: blur(8px);
     }
-    .pill svg { width: 12px; height: 12px; flex-shrink: 0; }
+    .stat-chip svg { width: 11px; height: 11px; color: var(--c-green); flex-shrink: 0; }
 
-    /* ─── LAYOUT ─── */
+    /* ══════════════════════════
+       SECTION LABEL
+    ══════════════════════════ */
+    .section-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      color: var(--c-text-mute);
+      text-transform: uppercase;
+      text-align: center;
+      margin: 32px 0 16px;
+    }
+
+    /* ══════════════════════════
+       LAYOUT
+    ══════════════════════════ */
     .content {
       max-width: 480px;
       margin: 0 auto;
-      padding: 0 16px 48px;
-    }
-    .section-label {
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 1.8px;
-      text-transform: uppercase;
-      color: var(--green);
-      text-align: center;
-      margin: 30px 0 14px;
+      padding: 0 16px 56px;
     }
 
-    /* ─── ROLE CARDS ─── */
-    .role-cards { display: flex; flex-direction: column; gap: 12px; }
+    /* ══════════════════════════
+       ROLE CARDS
+    ══════════════════════════ */
+    .role-cards { display: flex; flex-direction: column; gap: 10px; }
 
     .role-card {
-      background: var(--white);
-      border-radius: var(--radius-lg);
-      box-shadow: var(--shadow-md);
+      background: var(--c-card);
+      border-radius: var(--r-lg);
+      border: 1px solid var(--c-border);
       overflow: hidden;
-      border: 1.5px solid var(--border);
-      transition: border-color .2s, box-shadow .2s;
+      transition: border-color .25s, box-shadow .25s;
+      cursor: pointer;
     }
-    .role-card.active {
-      border-color: var(--green);
-      box-shadow: var(--shadow-green);
+    .role-card:hover { border-color: var(--c-border2); }
+    .role-card.active.senior {
+      border-color: rgba(167,139,250,.4);
+      box-shadow: 0 0 0 1px rgba(167,139,250,.15), 0 8px 32px rgba(124,58,237,.2);
+    }
+    .role-card.active.junior {
+      border-color: rgba(34,197,94,.4);
+      box-shadow: 0 0 0 1px rgba(34,197,94,.15), 0 8px 32px rgba(22,163,74,.2);
     }
 
     .card-header {
       display: flex;
       align-items: center;
       padding: 18px 16px;
-      cursor: pointer;
       gap: 14px;
       user-select: none;
     }
-    .card-icon {
-      width: 48px; height: 48px;
-      border-radius: var(--radius-md);
-      display: flex; align-items: center; justify-content: center;
+
+    .card-icon-wrap {
+      position: relative;
+      width: 46px; height: 46px;
       flex-shrink: 0;
     }
-    .card-icon.senior { background: var(--purple-light); }
-    .card-icon.junior { background: var(--green-light); }
-    .card-icon svg { width: 22px; height: 22px; }
+    .card-icon {
+      width: 46px; height: 46px;
+      border-radius: var(--r-md);
+      display: flex; align-items: center; justify-content: center;
+      border: 1px solid;
+    }
+    .card-icon.senior {
+      background: rgba(167,139,250,.1);
+      border-color: rgba(167,139,250,.2);
+    }
+    .card-icon.junior {
+      background: rgba(34,197,94,.1);
+      border-color: rgba(34,197,94,.2);
+    }
+    .card-icon svg { width: 20px; height: 20px; }
 
     .card-meta { flex: 1; min-width: 0; }
-    .card-title { font-size: 15px; font-weight: 800; color: var(--text); margin-bottom: 3px; }
-    .card-desc { font-size: 12px; color: var(--text-sub); line-height: 1.5; }
+    .card-title {
+      font-size: 14.5px;
+      font-weight: 700;
+      color: var(--c-text);
+      margin-bottom: 4px;
+      line-height: 1.3;
+    }
+    .card-desc {
+      font-size: 11.5px;
+      color: var(--c-text-sub);
+      line-height: 1.5;
+    }
 
-    .card-arrow {
-      width: 28px; height: 28px;
+    .card-toggle {
+      width: 26px; height: 26px;
       border-radius: 50%;
-      background: #f3f4f6;
+      background: rgba(255,255,255,.05);
+      border: 1px solid var(--c-border2);
       display: flex; align-items: center; justify-content: center;
       flex-shrink: 0;
-      transition: transform .25s, background .2s;
+      transition: transform .28s cubic-bezier(.4,0,.2,1), background .2s;
     }
-    .card-arrow svg { width: 14px; height: 14px; color: #9ca3af; }
-    .role-card.active .card-arrow {
-      transform: rotate(90deg);
-      background: var(--green-light);
+    .card-toggle svg { width: 13px; height: 13px; color: var(--c-text-mute); transition: color .2s; }
+    .role-card.active .card-toggle { transform: rotate(90deg); background: rgba(34,197,94,.12); }
+    .role-card.active .card-toggle svg { color: var(--c-green); }
+
+    /* divider */
+    .card-divider {
+      height: 1px;
+      background: var(--c-border);
+      margin: 0 16px;
+      display: none;
     }
-    .role-card.active .card-arrow svg { color: var(--green); }
+    .role-card.active .card-divider { display: block; }
 
     .card-body {
       max-height: 0;
       overflow: hidden;
-      transition: max-height .35s ease;
+      transition: max-height .38s cubic-bezier(.4,0,.2,1);
       padding: 0 16px;
     }
-    .role-card.active .card-body { max-height: 800px; }
-    .card-body-inner { padding-bottom: 20px; }
+    .role-card.active .card-body { max-height: 900px; }
+    .card-body-inner { padding: 18px 0 20px; }
 
-    /* ─── STEPS (inside card) ─── */
+    /* ══════════════════════════
+       STEPS
+    ══════════════════════════ */
     .steps {
-      background: #f9fafb;
-      border-radius: var(--radius-md);
-      padding: 14px 16px;
-      margin-bottom: 14px;
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 0;
+      margin-bottom: 18px;
     }
-    .step { display: flex; align-items: flex-start; gap: 11px; }
+    .step {
+      display: flex;
+      gap: 12px;
+      padding: 10px 0;
+      position: relative;
+    }
+    .step:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      left: 10px; top: 32px;
+      width: 1px; height: calc(100% - 10px);
+      background: var(--c-border2);
+    }
     .step-num {
       width: 22px; height: 22px;
       border-radius: 50%;
-      background: var(--green);
-      color: #fff;
-      font-size: 11px;
-      font-weight: 800;
+      background: rgba(34,197,94,.15);
+      border: 1px solid rgba(34,197,94,.3);
+      color: var(--c-green);
+      font-size: 10px;
+      font-weight: 700;
       display: flex; align-items: center; justify-content: center;
       flex-shrink: 0;
       margin-top: 1px;
+      position: relative;
+      z-index: 1;
     }
-    .step-text { font-size: 12.5px; line-height: 1.6; color: #374151; }
-    .step-text strong { color: var(--green); font-weight: 700; }
+    .step-text {
+      font-size: 12.5px;
+      line-height: 1.65;
+      color: var(--c-text-sub);
+      padding-top: 2px;
+    }
+    .step-text strong { color: var(--c-text); font-weight: 600; }
 
-    /* ─── GRADE PICKER ─── */
+    /* ══════════════════════════
+       GRADE PICKER
+    ══════════════════════════ */
     .grade-label {
       font-size: 11px;
-      font-weight: 700;
-      color: var(--text-sub);
-      margin-bottom: 9px;
+      font-weight: 500;
+      color: var(--c-text-mute);
+      margin-bottom: 10px;
       letter-spacing: .3px;
     }
     .grade-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 8px;
-      margin-bottom: 14px;
+      margin-bottom: 16px;
     }
     .grade-btn {
-      background: #f3f4f6;
-      border: 1.5px solid transparent;
-      border-radius: var(--radius-md);
-      padding: 10px 8px;
+      background: rgba(255,255,255,.04);
+      border: 1px solid var(--c-border);
+      border-radius: var(--r-sm);
+      padding: 10px 10px;
       cursor: pointer;
-      text-align: center;
+      text-align: left;
       font-family: inherit;
       transition: all .18s;
+      position: relative;
+      overflow: hidden;
     }
-    .grade-btn:active { transform: scale(.96); }
-    .grade-btn.selected { background: var(--green-light); border-color: var(--green); }
-    .grade-year { display: block; font-size: 13px; font-weight: 800; color: var(--text); }
-    .grade-btn.selected .grade-year { color: var(--green); }
-    .grade-sub { display: block; font-size: 10px; color: var(--text-sub); margin-top: 2px; }
-    .grade-btn.selected .grade-sub { color: var(--green-mid); }
+    .grade-btn::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(34,197,94,.08), transparent);
+      opacity: 0;
+      transition: opacity .2s;
+    }
+    .grade-btn:hover::before { opacity: 1; }
+    .grade-btn.selected {
+      background: rgba(34,197,94,.08);
+      border-color: rgba(34,197,94,.35);
+    }
+    .grade-btn.selected::before { opacity: 1; }
+    .grade-year {
+      display: block;
+      font-size: 12.5px;
+      font-weight: 700;
+      color: var(--c-text);
+      position: relative;
+    }
+    .grade-btn.selected .grade-year { color: var(--c-green); }
+    .grade-sub {
+      display: block;
+      font-size: 10px;
+      color: var(--c-text-mute);
+      margin-top: 2px;
+      position: relative;
+    }
+    .grade-btn.selected .grade-sub { color: rgba(34,197,94,.6); }
 
-    /* ─── BUTTONS ─── */
+    /* ══════════════════════════
+       BUTTONS
+    ══════════════════════════ */
     .btn {
       display: flex;
       flex-direction: column;
       align-items: center;
       width: 100%;
       padding: 15px 16px;
-      border-radius: var(--radius-md);
+      border-radius: var(--r-md);
       text-decoration: none;
       font-family: inherit;
       font-size: 14px;
-      font-weight: 800;
+      font-weight: 700;
       cursor: pointer;
       border: none;
-      transition: opacity .15s, transform .15s;
+      transition: opacity .15s, transform .15s, box-shadow .2s;
+      letter-spacing: -.1px;
     }
-    .btn:active { transform: scale(.97); opacity: .85; }
+    .btn:active { transform: scale(.97); opacity: .9; }
     .btn-green {
-      background: linear-gradient(135deg, #22964c, #1a7a3e);
+      background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
       color: #fff;
-      box-shadow: var(--shadow-green);
+      box-shadow: 0 4px 16px rgba(34,197,94,.3), 0 1px 0 rgba(255,255,255,.15) inset;
     }
+    .btn-green:hover { box-shadow: 0 6px 24px rgba(34,197,94,.4), 0 1px 0 rgba(255,255,255,.15) inset; }
     .btn-purple {
-      background: linear-gradient(135deg, #7b52b0, #5b3a8a);
+      background: linear-gradient(135deg, #a78bfa 0%, #7c3aed 100%);
       color: #fff;
-      box-shadow: 0 6px 20px rgba(91,58,138,.28);
+      box-shadow: 0 4px 16px rgba(124,58,237,.35), 0 1px 0 rgba(255,255,255,.15) inset;
     }
-    .btn-outline {
-      background: var(--white);
-      color: #374151;
-      border: 1.5px solid var(--border);
-      box-shadow: var(--shadow-sm);
+    .btn-purple:hover { box-shadow: 0 6px 24px rgba(124,58,237,.45), 0 1px 0 rgba(255,255,255,.15) inset; }
+    .btn-ghost {
+      background: rgba(255,255,255,.05);
+      border: 1px solid var(--c-border2);
+      color: var(--c-text-sub);
     }
+    .btn-ghost:hover { background: rgba(255,255,255,.08); }
     .btn-sub {
       font-size: 11px;
-      font-weight: 500;
-      opacity: .82;
-      margin-top: 2px;
+      font-weight: 400;
+      opacity: .75;
+      margin-top: 3px;
     }
 
-    .divider {
+    .btn-divider {
       display: flex;
       align-items: center;
       gap: 10px;
-      margin: 14px 0;
-      font-size: 11px;
-      color: #d1d5db;
+      margin: 12px 0;
+      font-size: 10.5px;
+      color: var(--c-text-mute);
     }
-    .divider::before, .divider::after {
+    .btn-divider::before, .btn-divider::after {
       content: '';
       flex: 1;
       height: 1px;
-      background: var(--border);
+      background: var(--c-border);
     }
 
-    /* ─── SAMPLE VOICES ─── */
-    .voices { display: flex; flex-direction: column; gap: 10px; }
+    /* ══════════════════════════
+       SAMPLE VOICES
+    ══════════════════════════ */
+    .voices { display: flex; flex-direction: column; gap: 8px; }
+
     .voice {
-      background: var(--white);
-      border-radius: var(--radius-md);
+      background: var(--c-card);
+      border: 1px solid var(--c-border);
+      border-radius: var(--r-md);
       padding: 14px 16px;
-      box-shadow: var(--shadow-sm);
-      border-left: 3px solid var(--green);
+      position: relative;
+      overflow: hidden;
+      transition: border-color .2s;
     }
-    .voice.junior { border-left-color: var(--purple); }
+    .voice::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 3px; height: 100%;
+    }
+    .voice.senior::before { background: linear-gradient(to bottom, #a78bfa, #7c3aed); }
+    .voice.junior::before { background: linear-gradient(to bottom, #22c55e, #16a34a); }
+    .voice:hover { border-color: var(--c-border2); }
+
     .voice-top {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 8px;
+      margin-bottom: 9px;
     }
     .voice-tag {
       font-size: 10px;
       font-weight: 700;
       padding: 2px 9px;
       border-radius: 20px;
+      letter-spacing: .3px;
     }
-    .voice-tag.senior-tag { background: var(--purple-light); color: var(--purple); }
-    .voice-tag.junior-tag { background: var(--green-light); color: var(--green); }
-    .voice-year { font-size: 10px; color: var(--text-sub); }
-    .voice-text { font-size: 12.5px; line-height: 1.7; color: #374151; }
+    .voice-tag.st {
+      background: rgba(167,139,250,.12);
+      border: 1px solid rgba(167,139,250,.25);
+      color: var(--c-purple);
+    }
+    .voice-tag.jt {
+      background: rgba(34,197,94,.1);
+      border: 1px solid rgba(34,197,94,.22);
+      color: var(--c-green);
+    }
+    .voice-year { font-size: 10px; color: var(--c-text-mute); }
+    .voice-text {
+      font-size: 12.5px;
+      line-height: 1.75;
+      color: var(--c-text-sub);
+    }
 
-    /* ─── HOW IT WORKS ─── */
+    /* ══════════════════════════
+       HOW IT WORKS
+    ══════════════════════════ */
     .how-card {
-      background: var(--white);
-      border-radius: var(--radius-lg);
-      padding: 20px 18px;
-      box-shadow: var(--shadow-md);
-      border: 1.5px solid var(--border);
+      background: var(--c-card);
+      border: 1px solid var(--c-border);
+      border-radius: var(--r-lg);
+      padding: 22px 18px;
+      position: relative;
+      overflow: hidden;
     }
+    .how-card::before {
+      content: '';
+      position: absolute;
+      top: -60px; right: -60px;
+      width: 180px; height: 180px;
+      background: radial-gradient(circle, rgba(34,197,94,.06), transparent 70%);
+      pointer-events: none;
+    }
+
     .how-title {
-      font-size: 13px;
-      font-weight: 800;
-      color: var(--text-sub);
-      text-align: center;
-      margin-bottom: 16px;
-      letter-spacing: .5px;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--c-text-mute);
+      letter-spacing: 1.5px;
       text-transform: uppercase;
+      text-align: center;
+      margin-bottom: 20px;
     }
-    .how-steps { display: flex; flex-direction: column; gap: 14px; }
-    .how-step { display: flex; align-items: flex-start; gap: 12px; }
+    .how-steps { display: flex; flex-direction: column; gap: 0; }
+    .how-step {
+      display: flex;
+      gap: 14px;
+      padding: 10px 0;
+      position: relative;
+    }
+    .how-step:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      left: 11px; top: 34px;
+      width: 1px; height: calc(100% - 10px);
+      background: linear-gradient(to bottom, var(--c-border2), var(--c-border));
+    }
     .how-num {
-      width: 26px; height: 26px;
+      width: 24px; height: 24px;
       border-radius: 50%;
-      background: var(--green);
-      color: #fff;
-      font-size: 12px;
-      font-weight: 800;
+      background: rgba(34,197,94,.12);
+      border: 1px solid rgba(34,197,94,.28);
+      color: var(--c-green);
+      font-size: 11px;
+      font-weight: 700;
       display: flex; align-items: center; justify-content: center;
       flex-shrink: 0;
-      margin-top: 1px;
+      position: relative; z-index: 1;
     }
-    .how-text { font-size: 13px; line-height: 1.65; color: var(--text); }
-    .how-text strong { color: var(--green); }
+    .how-text {
+      font-size: 13px;
+      line-height: 1.7;
+      color: var(--c-text-sub);
+      padding-top: 3px;
+    }
+    .how-text strong { color: var(--c-text); font-weight: 600; }
 
-    /* ─── FOOTER ─── */
+    /* ══════════════════════════
+       FOOTER
+    ══════════════════════════ */
     .footer {
       text-align: center;
-      padding: 28px 16px 32px;
-      font-size: 11px;
-      color: #9ca3af;
-      line-height: 1.8;
+      padding: 28px 16px 40px;
+      border-top: 1px solid var(--c-border);
     }
-    .footer a { color: var(--green); text-decoration: none; }
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-bottom: 12px;
+    }
+    .footer-links a {
+      font-size: 12px;
+      color: var(--c-text-mute);
+      text-decoration: none;
+      transition: color .2s;
+    }
+    .footer-links a:hover { color: var(--c-green); }
+    .footer-copy {
+      font-size: 11px;
+      color: var(--c-text-mute);
+    }
+
+    /* ══════════════════════════
+       SCROLL FADE IN
+    ══════════════════════════ */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity .5s ease, transform .5s ease;
+    }
+    .fade-in.visible { opacity: 1; transform: none; }
   </style>
 </head>
 <body>
 
-<!-- HERO -->
+<!-- ── HERO ── -->
 <div class="hero">
   <div class="hero-inner">
-    <div class="hero-badge">KickOffer</div>
-    <h1>先輩・後輩保護者が<br><em>縦につながる</em>掲示板</h1>
-    <p class="hero-sub">
-      チーム選びの不安は一人で抱えなくていい。<br>
-      先輩の体験談から、あなたに合った答えを見つけよう。
+    <div class="hero-eyebrow">
+      <span class="hero-eyebrow-dot"></span>
+      KickOffer Community
+    </div>
+    <h1 class="hero-title">
+      先輩・後輩保護者が<br>
+      <span class="accent">縦につながる</span>掲示板
+    </h1>
+    <p class="hero-desc">
+      チーム選びの不安は、一人で抱えなくていい。<br>
+      先輩保護者のリアルな体験談が、<br>あなたの答えを見つけるヒントになる。
     </p>
-    <div class="pills">
-      <span class="pill">
+    <div class="hero-stats">
+      <span class="stat-chip">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
         匿名投稿OK
       </span>
-      <span class="pill">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-        運営確認済み
+      <span class="stat-chip">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        運営が確認して掲載
       </span>
-      <span class="pill">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-        サッカー専門
+      <span class="stat-chip">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+        約2〜3分で完了
       </span>
     </div>
   </div>
 </div>
 
-<!-- MAIN -->
+<!-- ── MAIN ── -->
 <div class="content">
 
-  <p class="section-label">あなたはどちらですか？</p>
+  <p class="section-label fade-in">あなたの立場を選んでください</p>
 
-  <div class="role-cards">
+  <div class="role-cards fade-in">
 
     <!-- 先輩保護者 -->
-    <div class="role-card" id="card-senior" onclick="toggleCard('senior')">
+    <div class="role-card senior" id="card-senior" onclick="toggleCard('senior')">
       <div class="card-header">
         <div class="card-icon senior">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#5b3a8a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+          <svg viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
           </svg>
         </div>
         <div class="card-meta">
           <div class="card-title">先輩保護者として投稿する</div>
-          <div class="card-desc">ジュニアユース選びを経験した方<br>体験談・アドバイスを後輩へ共有</div>
+          <div class="card-desc">ジュニアユース選びを経験した方へ<br>体験談・アドバイスを後輩保護者へ</div>
         </div>
-        <div class="card-arrow">
+        <div class="card-toggle">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
             <polyline points="9 18 15 12 9 6"/>
           </svg>
         </div>
       </div>
+      <div class="card-divider"></div>
       <div class="card-body">
         <div class="card-body-inner">
           <div class="steps">
@@ -419,11 +651,11 @@
             </div>
             <div class="step">
               <div class="step-num">2</div>
-              <div class="step-text"><strong>悩んだこと・失敗談</strong>も正直に書くほど後輩の役に立ちます</div>
+              <div class="step-text"><strong>悩んだこと・失敗談</strong>も正直に書くほど後輩の力になります</div>
             </div>
             <div class="step">
               <div class="step-num">3</div>
-              <div class="step-text">運営が確認後、<strong>匿名で掲示板に掲載</strong>します</div>
+              <div class="step-text">運営が確認後、<strong>匿名で掲示板に掲載</strong>されます</div>
             </div>
           </div>
           <a class="btn btn-purple" href="https://forms.gle/DDn86FGVjo96jaVk7" target="_blank">
@@ -435,33 +667,32 @@
     </div>
 
     <!-- 後輩保護者 -->
-    <div class="role-card" id="card-junior" onclick="toggleCard('junior')">
+    <div class="role-card junior" id="card-junior" onclick="toggleCard('junior')">
       <div class="card-header">
         <div class="card-icon junior">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#1a7a3e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="12" cy="12" r="10"/>
-            <line x1="12" y1="8" x2="12" y2="12"/>
-            <line x1="12" y1="16" x2="12.01" y2="16"/>
+          <svg viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/>
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
           </svg>
         </div>
         <div class="card-meta">
           <div class="card-title">後輩保護者として使う</div>
-          <div class="card-desc">今まさにチーム選びで悩んでいる方<br>先輩の声を読む・悩みを投稿する</div>
+          <div class="card-desc">チーム選びで悩んでいる方へ<br>先輩の声を読む・悩みを相談する</div>
         </div>
-        <div class="card-arrow">
+        <div class="card-toggle">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
             <polyline points="9 18 15 12 9 6"/>
           </svg>
         </div>
       </div>
+      <div class="card-divider"></div>
       <div class="card-body">
         <div class="card-body-inner">
-
-          <div class="grade-label">卒業予定年度を選ぶと、関連する投稿が見やすくなります</div>
+          <div class="grade-label">卒業予定年度を選択（関連投稿が見やすくなります）</div>
           <div class="grade-grid">
             <button class="grade-btn" onclick="selectGrade(event,'2027')">
               <span class="grade-year">2027年度卒</span>
-              <span class="grade-sub">現在 小6・最優先</span>
+              <span class="grade-sub">現在 小6 · 最優先</span>
             </button>
             <button class="grade-btn" onclick="selectGrade(event,'2028')">
               <span class="grade-year">2028年度卒</span>
@@ -476,17 +707,14 @@
               <span class="grade-sub">現在 小3</span>
             </button>
           </div>
-
           <a class="btn btn-green" id="view-btn" href="https://troubled-delphinium-814.notion.site/cfd7288492c844e0bd6477cd02f66075?v=0e03f1e322f24598807fef772affe65c" target="_blank">
             先輩の体験談・掲示板を見る
             <span class="btn-sub" id="view-btn-sub">年度を選ぶと関連投稿が見やすくなります</span>
           </a>
-
-          <div class="divider">または</div>
-
-          <a class="btn btn-outline" href="https://forms.gle/DDn86FGVjo96jaVk7" target="_blank">
+          <div class="btn-divider">または</div>
+          <a class="btn btn-ghost" href="https://forms.gle/DDn86FGVjo96jaVk7" target="_blank">
             悩みを投稿して先輩に相談する
-            <span class="btn-sub" style="color:#9ca3af;">フォームに回答（約2分）</span>
+            <span class="btn-sub">フォームに回答（約2分）</span>
           </a>
         </div>
       </div>
@@ -495,50 +723,51 @@
   </div>
 
   <!-- SAMPLE VOICES -->
-  <p class="section-label" style="margin-top:34px;">掲示板の投稿サンプル</p>
-  <div class="voices">
-    <div class="voice">
+  <p class="section-label fade-in" style="margin-top:36px;">掲示板の投稿サンプル</p>
+  <div class="voices fade-in">
+    <div class="voice senior">
       <div class="voice-top">
-        <span class="voice-tag senior-tag">先輩保護者</span>
+        <span class="voice-tag st">先輩保護者</span>
         <span class="voice-year">2027年度卒</span>
       </div>
       <div class="voice-text">「体験会に6チーム参加しましたが、コーチの言葉遣いと練習中の選手の表情で最終的に決めました。費用よりも雰囲気が大事でした。」</div>
     </div>
     <div class="voice junior">
       <div class="voice-top">
-        <span class="voice-tag junior-tag">後輩保護者</span>
+        <span class="voice-tag jt">後輩保護者</span>
         <span class="voice-year">2028年度卒</span>
       </div>
-      <div class="voice-text">「自宅からの距離と費用のバランスで悩んでいます。強いチームに入れたいけど遠征が多いと聞いて不安で…先輩保護者に聞いてみたいです。」</div>
+      <div class="voice-text">「自宅からの距離と費用のバランスで悩んでいます。強いチームに入れたいけど遠征が多いと聞いて不安で…先輩に聞いてみたいです。」</div>
     </div>
-    <div class="voice">
+    <div class="voice senior">
       <div class="voice-top">
-        <span class="voice-tag senior-tag">先輩保護者</span>
+        <span class="voice-tag st">先輩保護者</span>
         <span class="voice-year">2026年度卒</span>
       </div>
-      <div class="voice-text">「セレクションに落ちても落ち込まないで。息子は3回落ちて4回目に合格。その間に練習量が増えて、結果的に成長できました。諦めないことが大事！」</div>
+      <div class="voice-text">「セレクションに落ちても落ち込まないで。息子は3回落ちて4回目に合格。その間に練習量が増えて、結果的に成長できました。」</div>
     </div>
   </div>
 
   <!-- HOW IT WORKS -->
-  <p class="section-label" style="margin-top:34px;">使い方</p>
-  <div class="how-card">
+  <p class="section-label fade-in" style="margin-top:36px;">使い方</p>
+  <div class="how-card fade-in">
+    <p class="how-title">How it works</p>
     <div class="how-steps">
       <div class="how-step">
         <div class="how-num">1</div>
-        <div class="how-text">先輩保護者が<strong>フォームから体験談・アドバイス</strong>を投稿</div>
+        <div class="how-text">先輩保護者が<strong>フォームから体験談・アドバイス</strong>を投稿します</div>
       </div>
       <div class="how-step">
         <div class="how-num">2</div>
-        <div class="how-text">KickOffer運営が<strong>内容を確認</strong>し、匿名で掲示板に公開</div>
+        <div class="how-text">KickOffer運営が<strong>内容を確認</strong>し、匿名で掲示板に公開します</div>
       </div>
       <div class="how-step">
         <div class="how-num">3</div>
-        <div class="how-text">後輩保護者が<strong>年度・テーマで絞り込んで</strong>必要な情報を検索</div>
+        <div class="how-text">後輩保護者が<strong>年度・テーマで絞り込んで</strong>情報を探せます</div>
       </div>
       <div class="how-step">
         <div class="how-num">4</div>
-        <div class="how-text">後輩からも悩みを投稿 → 先輩が答える<strong>循環コミュニティ</strong>へ</div>
+        <div class="how-text">後輩からも悩みを投稿 → 先輩が答える<strong>循環コミュニティ</strong>が育ちます</div>
       </div>
     </div>
   </div>
@@ -547,12 +776,16 @@
 
 <!-- FOOTER -->
 <div class="footer">
-  運営: <a href="https://lin.ee/kickoffer" target="_blank">KickOffer 公式LINE</a> ｜
-  <a href="https://forms.gle/DDn86FGVjo96jaVk7" target="_blank">投稿フォーム</a><br>
-  © 2026 KickOffer. 投稿内容は運営確認後に掲載されます。
+  <div class="footer-links">
+    <a href="https://lin.ee/kickoffer" target="_blank">公式LINE</a>
+    <a href="https://forms.gle/DDn86FGVjo96jaVk7" target="_blank">投稿フォーム</a>
+    <a href="https://troubled-delphinium-814.notion.site/cfd7288492c844e0bd6477cd02f66075?v=0e03f1e322f24598807fef772affe65c" target="_blank">掲示板を見る</a>
+  </div>
+  <div class="footer-copy">© 2026 KickOffer. 投稿内容は運営確認後に掲載されます。</div>
 </div>
 
 <script>
+  /* ── カード開閉 ── */
   function toggleCard(role) {
     const card = document.getElementById('card-' + role);
     const isActive = card.classList.contains('active');
@@ -560,6 +793,7 @@
     if (!isActive) card.classList.add('active');
   }
 
+  /* ── 学年選択 ── */
   const notionBase = 'https://troubled-delphinium-814.notion.site/cfd7288492c844e0bd6477cd02f66075?v=0e03f1e322f24598807fef772affe65c';
   const gradeLabels = {
     '2027': '小6（今すぐ情報収集を）',
@@ -567,16 +801,25 @@
     '2029': '小4の保護者向け',
     '2030': '小3の保護者向け'
   };
-
   function selectGrade(e, year) {
     e.stopPropagation();
     document.querySelectorAll('.grade-btn').forEach(b => b.classList.remove('selected'));
     e.currentTarget.classList.add('selected');
-    const label = gradeLabels[year] || '';
-    const btn = document.getElementById('view-btn');
-    btn.querySelector('.btn-sub').textContent = label + 'の投稿を優先して表示します';
-    btn.href = notionBase;
+    document.getElementById('view-btn').querySelector('.btn-sub').textContent =
+      gradeLabels[year] + 'の投稿を優先して表示します';
+    document.getElementById('view-btn').href = notionBase;
   }
+
+  /* ── スクロールフェードイン ── */
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(el => {
+      if (el.isIntersecting) {
+        el.target.classList.add('visible');
+        observer.unobserve(el.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 </script>
 </body>
 </html>
